@@ -69,6 +69,16 @@ namespace treeDiM.StackBuilder.Basics
         {
             return HalfAxis.ToHalfAxis(transform.transformRot(HalfAxis.ToVector3D(axis)));
         }
+        public static HAxis ReflectionX(HAxis axis)
+        {
+            Vector3D v = HalfAxis.ToVector3D(axis);
+            return HalfAxis.ToHalfAxis(new Vector3D(v.X, -v.Y, v.Z)); 
+        }
+        public static HAxis ReflectionY(HAxis axis)
+        {
+            Vector3D v = HalfAxis.ToVector3D(axis);
+            return HalfAxis.ToHalfAxis(new Vector3D(-v.X, v.Y, v.Z));
+        }
         public static string ToString(HAxis axis)
         {
             switch (axis)
@@ -117,7 +127,6 @@ namespace treeDiM.StackBuilder.Basics
         public Orientation(HalfAxis.HAxis dir0, HalfAxis.HAxis dir1)
         {   _dir0 = dir0; _dir1 = dir1; }
         #endregion
-
         #region Public properties
         public HalfAxis.HAxis Dir0
         {   get {   return _dir0;   }  }

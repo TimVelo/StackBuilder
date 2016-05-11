@@ -55,15 +55,15 @@ namespace treeDiM.StackBuilder.Basics
     {
         #region Data members
         private double _zLower = 0.0;
-        private string _patternName;
+        private int _layerIndex;
         private double _maxSpace = 0.0;
         #endregion
 
         #region Constructor
-        public BoxLayer(double zLow, string layerType)
+        public BoxLayer(double zLow, int layerIndex)
         {
             _zLower = zLow;
-            _patternName = layerType;
+            _layerIndex = layerIndex;
         }
         #endregion
 
@@ -75,7 +75,7 @@ namespace treeDiM.StackBuilder.Basics
         public int BoxCount { get { return Count; } }
         public int InterlayerCount { get { return 0; } }
         public int CylinderCount { get { return 0; } }
-        public string PatternName { get { return _patternName; } }
+        public int LayerIndex { get { return _layerIndex; } }
         public double MaximumSpace { get { return _maxSpace; } set { _maxSpace = value; } }
         #endregion
 
@@ -90,6 +90,30 @@ namespace treeDiM.StackBuilder.Basics
         {
             Add(new BoxPosition(vPosition, dirLength, dirWidth));
         }
+        public BBox3D BoundingBox(Vector3D dimensions)
+        {
+            BBox3D bbox = new BBox3D();
+            foreach (BoxPosition bpos in this)
+            {
+                Vector3D[] pts = new Vector3D[8];
+                Vector3D vI = HalfAxis.ToVector3D(bpos.DirectionLength);
+                Vector3D vJ = HalfAxis.ToVector3D(bpos.DirectionWidth);
+                Vector3D vK = Vector3D.CrossProduct(vI, vJ);
+                pts[0] = bpos.Position;
+                pts[1] = bpos.Position + dimensions.X * vI;
+                pts[2] = bpos.Position + dimensions.Y * vJ;
+                pts[3] = bpos.Position + dimensions.X * vI + dimensions.Y * vJ;
+                pts[4] = bpos.Position + dimensions.Z * vK;
+                pts[5] = bpos.Position + dimensions.Y * vJ + dimensions.Z * vK;
+                pts[6] = bpos.Position + HalfAxis.ToVector3D(bpos.DirectionWidth) * dimensions.Y;
+                pts[7] = bpos.Position + HalfAxis.ToVector3D(bpos.DirectionLength) * dimensions.X + HalfAxis.ToVector3D(bpos.DirectionWidth) * dimensions.Y;
+
+                foreach (Vector3D pt in pts)
+                    bbox.Extend(pt);
+            }
+            return bbox;
+        }
+
         /// <summary>
         /// Compute layer bouding box
         /// </summary>
@@ -666,9 +690,9 @@ namespace treeDiM.StackBuilder.Basics
         #endregion
 
         #region Adding layer / interlayer
-        public BoxLayer CreateNewLayer(double zLow, string patternName)
+        public BoxLayer CreateNewLayer(double zLow, int layerIndex)
         {
-            BoxLayer layer = new BoxLayer(zLow, patternName);
+            BoxLayer layer = new BoxLayer(zLow, layerIndex);
             Add(layer);
             return layer;
         }
@@ -688,21 +712,6 @@ namespace treeDiM.StackBuilder.Basics
                 return -1;
             else if (this.CaseCount == sol.CaseCount)
             {
-                if ((sol.Count > 0 && sol[0] is BoxLayer)
-                    && (this.Count > 0 && this[0] is BoxLayer))
-                {
-                    BoxLayer layerSol = (BoxLayer)sol[0];
-                    int iPatternSol = PatternNameToIndex(layerSol.PatternName);
-                    BoxLayer layerThis = (BoxLayer)this[0];
-                    int iPatternThis = PatternNameToIndex(layerThis.PatternName);
-
-                    if (iPatternSol > iPatternThis)
-                        return -1;
-                    else if (iPatternSol == iPatternThis)
-                        return 0;
-                    else
-                        return 1;
-                }
                 return 0;
             }
             else

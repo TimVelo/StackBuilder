@@ -17,7 +17,6 @@ namespace treeDiM.StackBuilder.Engine
     public class BoxCasePalletSolver : IBoxCasePalletAnalysisSolver
     {
         #region Data members
-        private static List<LayerPattern> _patterns = new List<LayerPattern>();
         private BoxProperties _boxProperties;
         private List<PalletSolutionDesc> _palletSolutionList;
         private InterlayerProperties _interlayerProperties;
@@ -28,7 +27,6 @@ namespace treeDiM.StackBuilder.Engine
         #region Constructor
         public BoxCasePalletSolver()
         {
-            BoxCasePalletSolver.LoadPatterns();
         }
         #endregion
 
@@ -49,7 +47,7 @@ namespace treeDiM.StackBuilder.Engine
                 BoxProperties caseProperties = palletSolution.Analysis.BProperties as BoxProperties;
 
                 // loop through all patterns
-                foreach (LayerPattern pattern in _patterns)
+                foreach (LayerPattern pattern in LayerPattern.All)
                 {
                     if (!_constraintSet.AllowPattern(pattern.Name))
                         continue;
@@ -57,8 +55,6 @@ namespace treeDiM.StackBuilder.Engine
                     // loop through all swap positions (if layer can be swapped)
                     for (int swapPos = 0; swapPos < (pattern.CanBeSwapped ? 2 : 1); ++swapPos)
                     {
-                        pattern.Swapped = swapPos == 1;
-
                         // loop through all vertical axes
                         for (int i = 0; i < 3; ++i)
                         {
@@ -70,8 +66,8 @@ namespace treeDiM.StackBuilder.Engine
                             try
                             {
                                 // build 2 layers (pallet length/width)
-                                Layer layer1 = new Layer(_boxProperties, caseProperties, axisOrtho1);
-                                Layer layer2 = new Layer(_boxProperties, caseProperties, axisOrtho2);
+                                Layer2D layer1 = BuildLayer(_boxProperties, caseProperties, axisOrtho1, swapPos == 1);
+                                Layer2D layer2 = BuildLayer(_boxProperties, caseProperties, axisOrtho2, swapPos == 1);
                                 double actualLength1 = 0.0, actualLength2 = 0.0, actualWidth1 = 0.0, actualWidth2 = 0.0;
                                 bool bResult1 = pattern.GetLayerDimensionsChecked(layer1, out actualLength1, out actualWidth1);
                                 bool bResult2 = pattern.GetLayerDimensionsChecked(layer2, out actualLength2, out actualWidth2);
@@ -79,7 +75,7 @@ namespace treeDiM.StackBuilder.Engine
                                 string layerAlignment = string.Empty;
                                 for (int j = 0; j < 4; ++j)
                                 {
-                                    Layer layer1T = null, layer2T = null;
+                                    Layer2D layer1T = null, layer2T = null;
                                     if (0 == j && _constraintSet.AllowAlignedLayers && bResult1)
                                     {
                                         pattern.GenerateLayer(layer1, actualLength1, actualWidth1);
@@ -148,8 +144,8 @@ namespace treeDiM.StackBuilder.Engine
                                         }
 
                                         // select current layer type
-                                        Layer currentLayer = iLayerIndex % 2 == 0 ? layer1T : layer2T;
-                                        BoxLayer layer = sol.CreateNewLayer(zLayer, pattern.Name);
+                                        Layer2D currentLayer = iLayerIndex % 2 == 0 ? layer1T : layer2T;
+                                        BoxLayer layer = sol.CreateNewLayer(zLayer, 0);
 
                                         foreach (LayerPosition layerPos in currentLayer)
                                         {
@@ -203,30 +199,27 @@ namespace treeDiM.StackBuilder.Engine
             // return list of solutions
             return solutions;
         }
-        private static void LoadPatterns()
-        {
-            if (0 == _patterns.Count)
-            {
-                _patterns.Add(new LayerPatternColumn());
-                _patterns.Add(new LayerPatternInterlocked());
-                _patterns.Add(new LayerPatternDiagonale());
-                _patterns.Add(new LayerPatternTrilock());
-                _patterns.Add(new LayerPatternSpirale());
-                _patterns.Add(new LayerPatternEnlargedSpirale());
-            }
-        }
 
         public static string[] PatternNames
         {
             get
             {
-                BoxCasePalletSolver.LoadPatterns();
-                string[] patternNames = new string[_patterns.Count];
+                List<string> patternNames = new List<string>();
                 int i = 0;
-                foreach (LayerPattern p in _patterns)
+                foreach (LayerPattern p in LayerPattern.All)
                     patternNames[i++] = p.Name;
-                return patternNames;
+                return patternNames.ToArray();
             }
+        }
+        #endregion
+
+        #region Layers
+        Layer2D BuildLayer(BoxProperties boxP, BoxProperties caseP, HalfAxis.HAxis orthoAxis, bool swapped)
+        {
+            return new Layer2D(new Vector3D(boxP.Length, boxP.Width, boxP.Height)
+                                , new Vector2D(caseP.InsideLength, caseP.InsideWidth)
+                                , orthoAxis
+                                , swapped);
         }
         #endregion
 

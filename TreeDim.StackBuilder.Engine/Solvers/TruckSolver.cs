@@ -14,14 +14,12 @@ namespace treeDiM.StackBuilder.Engine
     public class TruckSolver : ITruckSolver
     {
         #region Data members
-        private List<LayerPattern> _patterns = new List<LayerPattern>();
         static readonly ILog _log = LogManager.GetLogger(typeof(TruckSolver));
         #endregion
 
         #region TruckSolver
         public TruckSolver()
         {
-            LoadPatterns();
         }
         #endregion
 
@@ -37,18 +35,19 @@ namespace treeDiM.StackBuilder.Engine
         {
             List<TruckSolution> solutions = new List<TruckSolution>();
 
+            HalfAxis.HAxis[] axis = { HalfAxis.HAxis.AXIS_Z_N, HalfAxis.HAxis.AXIS_Z_P};
+
             // build layer using truck length / width
-            foreach (LayerPattern pattern in _patterns)
+            foreach (LayerPattern pattern in LayerPattern.All)
             {
                 for (int swapPos = 0; swapPos < (pattern.CanBeSwapped ? 2 : 1); ++swapPos)
                 {
-                    pattern.Swapped = swapPos == 1;
-
                     for (int orientation = 0; orientation < 2; ++orientation)
                     {
                         try
                         {
-                            Layer layer = new Layer(truckAnalysis.ParentSolution, truckAnalysis.TruckProperties, truckAnalysis.ConstraintSet, orientation);
+                            Layer2D layer = BuildLayer(truckAnalysis.ParentSolution, truckAnalysis.TruckProperties, truckAnalysis.ConstraintSet
+                                , axis[orientation], swapPos == 1);
                             double actualLength = 0.0, actualWidth = 0.0;
                             if (!pattern.GetLayerDimensionsChecked(layer, out actualLength, out actualWidth))
                                 continue;
@@ -56,7 +55,7 @@ namespace treeDiM.StackBuilder.Engine
 
                             TruckSolution sol = new TruckSolution("sol", truckAnalysis);
 
-                            BoxLayer boxLayer = new BoxLayer(0.0, string.Empty);
+                            BoxLayer boxLayer = new BoxLayer(0.0, 0);
                             foreach (LayerPosition layerPos in layer)
                                 boxLayer.AddPosition(layerPos.Position, layerPos.LengthAxis, layerPos.WidthAxis);
 
@@ -79,18 +78,15 @@ namespace treeDiM.StackBuilder.Engine
 
             return solutions;
         }
+        #endregion
 
-        private void LoadPatterns()
-        {
-            if (0 == _patterns.Count)
-            {
-                _patterns.Add(new LayerPatternColumn());
-                _patterns.Add(new LayerPatternInterlocked());
-                _patterns.Add(new LayerPatternTrilock());
-                _patterns.Add(new LayerPatternDiagonale());
-                _patterns.Add(new LayerPatternSpirale());
-                _patterns.Add(new LayerPatternEnlargedSpirale());
-            }
+        #region Build layer
+        Layer2D BuildLayer(CasePalletSolution palletSolution, TruckProperties truckProperties, TruckConstraintSet constraintSet
+            ,HalfAxis.HAxis axisOrtho, bool swapped)
+        { 
+            return new Layer2D(new Vector3D(palletSolution.PalletLength, palletSolution.PalletWidth, palletSolution.PalletHeight)
+                                , new Vector2D(truckProperties.Length, truckProperties.Width)
+                                , axisOrtho, swapped);
         }
         #endregion
     }

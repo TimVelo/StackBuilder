@@ -77,6 +77,7 @@
             this.checkBoxY.TabIndex = 3;
             this.checkBoxY.Text = "Y";
             this.checkBoxY.UseVisualStyleBackColor = true;
+            this.checkBoxY.CheckedChanged += new System.EventHandler(this.onCheckedChanged);
             // 
             // checkBoxZ
             // 
@@ -88,6 +89,7 @@
             this.checkBoxZ.TabIndex = 4;
             this.checkBoxZ.Text = "Z";
             this.checkBoxZ.UseVisualStyleBackColor = true;
+            this.checkBoxZ.CheckedChanged += new System.EventHandler(this.onCheckedChanged);
             // 
             // pictureBoxZ
             // 

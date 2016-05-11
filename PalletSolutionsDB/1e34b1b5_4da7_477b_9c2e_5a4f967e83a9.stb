@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<Document Name="GALIA A16 300x200x125" Description="GALIA A9 600x400x300" Author="PBU" DateCreated="25/11/2013 14:46:20">
+  <ItemProperties>
+    <BoxProperties Id="7ac16c7e-93d5-4202-a191-8b380249f7a9" Name="A16" Description="GALIA A16 300x200x125" Length="300" Width="200" Height="125" InsideLength="294" InsideWidth="194" InsideHeight="115" Weight="0" ShowTape="False">
+      <FaceColors>
+        <FaceColor FaceIndex="0" Color="-2987746" />
+        <FaceColor FaceIndex="1" Color="-2987746" />
+        <FaceColor FaceIndex="2" Color="-2987746" />
+        <FaceColor FaceIndex="3" Color="-2987746" />
+        <FaceColor FaceIndex="4" Color="-2987746" />
+        <FaceColor FaceIndex="5" Color="-2987746" />
+      </FaceColors>
+      <Textures />
+    </BoxProperties>
+    <PalletProperties Id="d1f4a5d2-c740-4145-872f-1b0b0e02c445" Name="EUR2" Description="EUR2-EPAL (European Pallet Association)" Length="1200" Width="1000" Height="145" Weight="33" AdmissibleLoadWeight="0" AdmissibleLoadHeight="0" Type="EUR2" Color="-256" />
+  </ItemProperties>
+  <Analyses>
+    <AnalysisPallet Name="A16" Description="GALIA A16 300x200x125" BoxId="7ac16c7e-93d5-4202-a191-8b380249f7a9" PalletId="d1f4a5d2-c740-4145-872f-1b0b0e02c445">
+      <ConstraintSetBox AlignedLayersAllowed="True" AlternateLayersAllowed="True" AllowedBoxPositions="ZP" AllowedPatterns="Column,Interlocked,Diagonale,Trilock,Spirale,Enlarged spiral" MaximumHeight="1150" MaximumPalletWeight="1000" OverhangX="0" OverhangY="0" />
+      <Solutions>
+        <Solution Title="Interlocked-Z-inv-1-swaped" HomogeneousLayers="false" LimitReached="0" Selected="true">
+          <Layers>
+            <BoxLayer ZLow="145">
+              <BoxPosition Position="(900, 0, 145)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 0, 145)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 0, 145)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 0, 145)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 200, 145)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 200, 145)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 200, 145)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 200, 145)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(1000, 700, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(800, 700, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(600, 700, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(400, 700, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(200, 700, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(0, 700, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(1000, 1000, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(800, 1000, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(600, 1000, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(400, 1000, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(200, 1000, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(0, 1000, 145)" AxisLength="YN" AxisWidth="XP" />
+            </BoxLayer>
+            <BoxLayer ZLow="270">
+              <BoxPosition Position="(0, 800, 270)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 800, 270)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 800, 270)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 800, 270)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 600, 270)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 600, 270)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 600, 270)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 600, 270)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(200, 300, 270)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(400, 300, 270)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(600, 300, 270)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(800, 300, 270)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1000, 300, 270)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1200, 300, 270)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(200, 0, 270)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(400, 0, 270)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(600, 0, 270)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(800, 0, 270)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1000, 0, 270)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1200, 0, 270)" AxisLength="YP" AxisWidth="XN" />
+            </BoxLayer>
+            <BoxLayer ZLow="395">
+              <BoxPosition Position="(900, 0, 395)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 0, 395)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 0, 395)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 0, 395)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 200, 395)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 200, 395)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 200, 395)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 200, 395)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(1000, 700, 395)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(800, 700, 395)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(600, 700, 395)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(400, 700, 395)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(200, 700, 395)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(0, 700, 395)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(1000, 1000, 395)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(800, 1000, 395)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(600, 1000, 395)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(400, 1000, 395)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(200, 1000, 395)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(0, 1000, 395)" AxisLength="YN" AxisWidth="XP" />
+            </BoxLayer>
+            <BoxLayer ZLow="520">
+              <BoxPosition Position="(0, 800, 520)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 800, 520)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 800, 520)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 800, 520)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 600, 520)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 600, 520)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 600, 520)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 600, 520)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(200, 300, 520)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(400, 300, 520)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(600, 300, 520)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(800, 300, 520)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1000, 300, 520)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1200, 300, 520)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(200, 0, 520)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(400, 0, 520)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(600, 0, 520)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(800, 0, 520)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1000, 0, 520)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1200, 0, 520)" AxisLength="YP" AxisWidth="XN" />
+            </BoxLayer>
+            <BoxLayer ZLow="645">
+              <BoxPosition Position="(900, 0, 645)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 0, 645)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 0, 645)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 0, 645)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 200, 645)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 200, 645)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 200, 645)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 200, 645)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(1000, 700, 645)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(800, 700, 645)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(600, 700, 645)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(400, 700, 645)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(200, 700, 645)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(0, 700, 645)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(1000, 1000, 645)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(800, 1000, 645)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(600, 1000, 645)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(400, 1000, 645)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(200, 1000, 645)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(0, 1000, 645)" AxisLength="YN" AxisWidth="XP" />
+            </BoxLayer>
+            <BoxLayer ZLow="770">
+              <BoxPosition Position="(0, 800, 770)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 800, 770)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 800, 770)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 800, 770)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 600, 770)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 600, 770)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 600, 770)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 600, 770)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(200, 300, 770)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(400, 300, 770)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(600, 300, 770)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(800, 300, 770)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1000, 300, 770)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1200, 300, 770)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(200, 0, 770)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(400, 0, 770)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(600, 0, 770)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(800, 0, 770)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1000, 0, 770)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1200, 0, 770)" AxisLength="YP" AxisWidth="XN" />
+            </BoxLayer>
+            <BoxLayer ZLow="895">
+              <BoxPosition Position="(900, 0, 895)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 0, 895)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 0, 895)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 0, 895)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 200, 895)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 200, 895)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 200, 895)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 200, 895)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(1000, 700, 895)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(800, 700, 895)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(600, 700, 895)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(400, 700, 895)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(200, 700, 895)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(0, 700, 895)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(1000, 1000, 895)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(800, 1000, 895)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(600, 1000, 895)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(400, 1000, 895)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(200, 1000, 895)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(0, 1000, 895)" AxisLength="YN" AxisWidth="XP" />
+            </BoxLayer>
+            <BoxLayer ZLow="1020">
+              <BoxPosition Position="(0, 800, 1020)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 800, 1020)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 800, 1020)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 800, 1020)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 600, 1020)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(300, 600, 1020)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 600, 1020)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(900, 600, 1020)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(200, 300, 1020)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(400, 300, 1020)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(600, 300, 1020)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(800, 300, 1020)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1000, 300, 1020)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1200, 300, 1020)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(200, 0, 1020)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(400, 0, 1020)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(600, 0, 1020)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(800, 0, 1020)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1000, 0, 1020)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1200, 0, 1020)" AxisLength="YP" AxisWidth="XN" />
+            </BoxLayer>
+          </Layers>
+          <TruckAnalyses />
+          <EctAnalyses />
+        </Solution>
+      </Solutions>
+    </AnalysisPallet>
+  </Analyses>
+</Document>

@@ -1,4 +1,4 @@
-﻿namespace treeDiM.StackBuilder.Graphics.Controls
+﻿namespace treeDiM.StackBuilder.Graphics
 {
     partial class UCtrlLayerList
     {
@@ -42,7 +42,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "UCtrlLayerList";
             this.ResumeLayout(false);
-
         }
 
         #endregion

@@ -70,6 +70,16 @@ namespace treeDiM.StackBuilder.Graphics
             // draw solid face
             Brush brushSolid = new SolidBrush(box.TopFace.ColorFill);
             g.FillPolygon(brushSolid, pt);
+            // draw box tape
+            if (box.ShowTape)
+            {
+                // instantiate brush
+                Brush brushTape = new SolidBrush(box.TapeColor);
+                // fill polygon
+                Point[] pts = TransformPoint(box.TapePoints);
+                g.FillPolygon(brushTape, pts);
+            }
+
             Brush brushPath = new SolidBrush(box.TopFace.ColorPath);
             Pen penPath = new Pen(brushPath);
             g.DrawPolygon(penPath, pt);

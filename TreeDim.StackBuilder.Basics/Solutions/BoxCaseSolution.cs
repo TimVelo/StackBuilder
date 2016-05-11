@@ -167,9 +167,9 @@ namespace treeDiM.StackBuilder.Basics
         #endregion
 
         #region Adding layer / interlayer
-        public BoxLayer CreateNewLayer(double zLow, string patternName)
+        public BoxLayer CreateNewLayer(double zLow, int layerIndex)
         {
-            BoxLayer layer = new BoxLayer(zLow, patternName);
+            BoxLayer layer = new BoxLayer(zLow, layerIndex);
             Add(layer);
             return layer;
         }

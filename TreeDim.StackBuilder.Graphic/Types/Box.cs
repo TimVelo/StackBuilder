@@ -168,6 +168,50 @@ namespace treeDiM.StackBuilder.Graphics
                     _noFlats = bundleProp.NoFlats;
             }
         }
+
+        public Box(uint pickId, BProperties bProperties, LayerPosition bPosition)
+        {
+            if (!bPosition.IsValid)
+                throw new GraphicsException("Invalid BoxPosition: can not create box");
+            _pickId = pickId;
+            _dim[0] = bProperties.Length;
+            _dim[1] = bProperties.Width;
+            _dim[2] = bProperties.Height;
+
+            _colors = bProperties.Colors;
+
+            BoxProperties boxProperties = bProperties as BoxProperties;
+            if (null != boxProperties)
+            {
+                List<Pair<HalfAxis.HAxis, Texture>> textures = boxProperties.TextureList;
+                foreach (Pair<HalfAxis.HAxis, Texture> tex in textures)
+                {
+                    int iIndex = (int)tex.first;
+                    if (null == _textureLists[iIndex])
+                        _textureLists[iIndex] = new List<Texture>();
+                    _textureLists[iIndex].Add(tex.second);
+                }
+                _showTape = boxProperties.ShowTape;
+                _tapeWidth = boxProperties.TapeWidth;
+                _tapeColor = boxProperties.TapeColor;
+            }
+
+            // set position
+            Position = bPosition.Position;
+            // set direction length
+            LengthAxis = HalfAxis.ToVector3D(bPosition.LengthAxis);
+            // set direction width
+            WidthAxis = HalfAxis.ToVector3D(bPosition.WidthAxis);
+            // IsBundle ?
+            _isBundle = bProperties.IsBundle;
+            if (bProperties.IsBundle)
+            {
+                BundleProperties bundleProp = bProperties as BundleProperties;
+                if (null != bundleProp)
+                    _noFlats = bundleProp.NoFlats;
+            }
+        }
+
         public Box(uint pickId, PackProperties packProperties, BoxPosition bPosition)
         { 
             if (!bPosition.IsValid)
@@ -412,6 +456,16 @@ namespace treeDiM.StackBuilder.Graphics
                 foreach (Vector3D v in this.Points)
                     zmin = Math.Min(v.Z, zmin);
                 return zmin;
+            }
+        }
+        public BBox3D BBox
+        {
+            get
+            {
+                BBox3D bbox = new BBox3D();
+                foreach (Vector3D v in this.Points)
+                    bbox.Extend(v);
+                return bbox;
             }
         }
         #endregion

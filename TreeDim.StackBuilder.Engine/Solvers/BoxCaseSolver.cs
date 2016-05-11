@@ -15,7 +15,6 @@ namespace treeDiM.StackBuilder.Engine
     public class BoxCaseSolver : IBoxCaseAnalysisSolver
     {
         #region Data members
-        private static List<LayerPattern> _patterns = new List<LayerPattern>();
         private BProperties _bProperties;
         private BoxProperties _caseProperties;
         private BCaseConstraintSet _constraintSet;
@@ -25,7 +24,6 @@ namespace treeDiM.StackBuilder.Engine
         #region Constructor
         public BoxCaseSolver()
         {
-            BoxCaseSolver.LoadPatterns();
         }
         #endregion
 
@@ -50,7 +48,7 @@ namespace treeDiM.StackBuilder.Engine
 
             int[] patternColumnCount = new int[6];
             // loop throw all patterns
-            foreach (LayerPattern pattern in _patterns)
+            foreach (LayerPattern pattern in LayerPattern.All)
             {
                 // loop through all vertical axes
                 for (int i = 0; i < 6; ++i)
@@ -61,7 +59,7 @@ namespace treeDiM.StackBuilder.Engine
                     try
                     {
                         // build layer
-                        Layer layer = new Layer(_bProperties, _caseProperties, axisOrtho);
+                        Layer2D layer = BuildLayer(_bProperties, _caseProperties, axisOrtho, false);
                         double actualLength = 0.0, actualWidth = 0.0;
                         if (!pattern.GetLayerDimensionsChecked(layer, out actualLength, out actualWidth))
                             continue;
@@ -79,7 +77,7 @@ namespace treeDiM.StackBuilder.Engine
 
                         while (!maxWeightReached && !maxHeightReached && !maxNumberReached)
                         {
-                            BoxLayer bLayer = sol.CreateNewLayer(zLayer, string.Empty);
+                            BoxLayer bLayer = sol.CreateNewLayer(zLayer, 0);
 
                             foreach (LayerPosition layerPos in layer)
                             {
@@ -181,20 +179,16 @@ namespace treeDiM.StackBuilder.Engine
         }
         #endregion
 
-        #region Static methods
-        private static void LoadPatterns()
+        public Layer2D BuildLayer(BProperties bProperties, BoxProperties caseProperties
+            , HalfAxis.HAxis axisOrtho, bool swapped)
         {
-            if (0 == _patterns.Count)
-            {
-                _patterns.Add(new LayerPatternColumn());
-                _patterns.Add(new LayerPatternInterlocked());
-                _patterns.Add(new LayerPatternTrilock());
-                _patterns.Add(new LayerPatternDiagonale());
-                _patterns.Add(new LayerPatternSpirale());
-                _patterns.Add(new LayerPatternEnlargedSpirale());
-            }
+            return new Layer2D(
+                new Vector3D(bProperties.Length, bProperties.Width, bProperties.Height)
+                , new Vector2D(caseProperties.InsideLength, caseProperties.InsideWidth)
+                , axisOrtho
+                , swapped
+            );
         }
-        #endregion
     }
     #endregion
 }

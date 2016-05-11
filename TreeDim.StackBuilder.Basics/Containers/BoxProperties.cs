@@ -118,38 +118,29 @@ namespace treeDiM.StackBuilder.Basics
         {
             get { return InsideLength * InsideWidth * InsideHeight; }
         }
-        double[] OuterDimensions
-        {
-            get
-            {
-                double[] dimensions = new double[3];
-                dimensions[0] = _length; dimensions[1] = _width; dimensions[2] = _height;
-                return dimensions;
-            }
-        }
-        double[] InsideDimensions
-        {
-            get
-            {
-                double[] dimensions = new double[3];
-                dimensions[0] = InsideLength; dimensions[1] = InsideWidth; dimensions[2] = InsideHeight;
-                return dimensions;
-            }
-        }
+        public override Vector3D OuterDimensions
+        {   get { return new Vector3D(_length, _width, _height); } }
+        public virtual Vector3D InsideDimensions
+        {   get { return new Vector3D( InsideLength, InsideWidth, InsideHeight); } }
+        public virtual double[] OuterDimensionsArray
+        { get { return new double[] { _length, _width, _height }; } }
+        public virtual double[] InsideDimensionsArray
+        {   get { return new double[] { InsideLength, InsideWidth, InsideHeight }; } }
+
         public bool FitsIn(BoxProperties caseProperties)
         {
-            double[] dimItem = OuterDimensions;
+            double[] dimItem = OuterDimensionsArray;
             Array.Sort(dimItem);
-            double[] dimCase = caseProperties.InsideDimensions;
+            double[] dimCase = caseProperties.InsideDimensionsArray;
             Array.Sort(dimCase);
             return dimItem[0] <= dimCase[0]
                 && dimItem[1] <= dimCase[1]
                 && dimItem[2] <= dimCase[2];        
         }
         public bool FitsIn(BoxProperties caseProperties, bool allowVerticalX, bool allowVerticalY, bool allowVerticalZ)
-        { 
-            double[] dimItem = OuterDimensions;
-            double[] dimCase = caseProperties.InsideDimensions;
+        {
+            double[] dimItem = OuterDimensionsArray;
+            double[] dimCase = caseProperties.InsideDimensionsArray;
             if (allowVerticalX)
             {
                 if (

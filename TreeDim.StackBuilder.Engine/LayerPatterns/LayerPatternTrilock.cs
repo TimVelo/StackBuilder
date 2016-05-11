@@ -18,7 +18,7 @@ namespace treeDiM.StackBuilder.Engine
             get { return "Trilock"; }
         }
 
-        public override bool GetLayerDimensions(Layer layer, out double actualLength, out double actualWidth)
+        public override bool GetLayerDimensions(Layer2D layer, out double actualLength, out double actualWidth)
         {
             double boxLength = layer.BoxLength;
             double boxWidth = layer.BoxWidth;
@@ -41,7 +41,7 @@ namespace treeDiM.StackBuilder.Engine
                 && sizeX_area3 > 0 && sizeY_area3 > 0;
         }
 
-        public override void GenerateLayer(Layer layer, double actualLength, double actualWidth)
+        public override void GenerateLayer(Layer2D layer, double actualLength, double actualWidth)
         {
             layer.Clear();
 
@@ -110,7 +110,7 @@ namespace treeDiM.StackBuilder.Engine
             layer.UpdateMaxSpace(spaceY_area3);
         }
 
-        public override int GetNumberOfVariants(Layer layer)
+        public override int GetNumberOfVariants(Layer2D layer)
         {
             return 1;
         }

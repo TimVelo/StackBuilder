@@ -1102,8 +1102,11 @@ namespace treeDiM.StackBuilder.Desktop
                 nodeItem.Nodes.Add(subNode);
             }
         }
- 
-        #region Case/Pallet analyses 
+        public void OnNewAnalysisCreated(Document doc, Analysis analysis)
+        { 
+        }
+
+        #region Case/Pallet analyses
         /// <summary>
         /// handles new analysis created
         /// </summary>

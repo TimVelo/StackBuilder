@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-  <Module Id="StackBuilderGUIExtMSM" Language="1033" Version="2.0.25.0">
+  <Module Id="StackBuilderGUIExtMSM" Language="1033" Version="3.0.0.0">
     <Package Id="27807e7c-accd-496f-8cfe-09de354c6051" Manufacturer="Microsoft" InstallerVersion="200" />
     <DirectoryRef Id="BIN32">
       <Component Id="StackBuilder" Guid="{AF1B8D78-642E-4370-8BFC-3775DDB3B67E}">

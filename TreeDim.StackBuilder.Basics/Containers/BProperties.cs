@@ -43,6 +43,8 @@ namespace treeDiM.StackBuilder.Basics
         {
             get { return _length * _width * Height; }
         }
+        public virtual Vector3D OuterDimensions
+        { get { return new Vector3D(Length, Width, Height); } }
         public virtual double Weight
         {
             get { return _weight; }
@@ -82,6 +84,11 @@ namespace treeDiM.StackBuilder.Basics
                     return 0.0;
             }
         }
+        public Vector3D Dimensions
+        {
+            get { return new Vector3D(_length, _width, Height); }
+        }
+
         abstract public bool IsBundle { get; }
         #endregion
 

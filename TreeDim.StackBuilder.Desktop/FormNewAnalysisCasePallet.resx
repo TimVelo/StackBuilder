@@ -138,7 +138,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbPallets.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="cbCases.Location" type="System.Drawing.Point, System.Drawing">
     <value>111, 65</value>
@@ -159,7 +159,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbCases.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="lbBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -190,7 +190,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbBox.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="uCtrlOptMaximumWeight.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 44</value>
@@ -209,17 +209,17 @@
   </data>
   <data name="uCtrlOptMaximumWeight.Value" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFN0cmVlRGlNLlN0YWNrQnVpbGRlci5CYXNpY3MsIFZlcnNpb249
-        Mi4wLjI1LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJXRyZWVEaU0u
-        U3RhY2tCdWlsZGVyLkJhc2ljcy5PcHREb3VibGUCAAAACl9hY3RpdmF0ZWQEX3ZhbAAAAQYCAAAAAAAA
-        AAAAAAAACw==
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFJ0cmVlRGlNLlN0YWNrQnVpbGRlci5CYXNpY3MsIFZlcnNpb249
+        My4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsBQEAAAAldHJlZURpTS5T
+        dGFja0J1aWxkZXIuQmFzaWNzLk9wdERvdWJsZQIAAAAKX2FjdGl2YXRlZARfdmFsAAABBgIAAAAAAAAA
+        AAAAAAAL
 </value>
   </data>
   <data name="&gt;&gt;uCtrlOptMaximumWeight.Name" xml:space="preserve">
     <value>uCtrlOptMaximumWeight</value>
   </data>
   <data name="&gt;&gt;uCtrlOptMaximumWeight.Type" xml:space="preserve">
-    <value>treeDiM.StackBuilder.Basics.UCtrlOptDouble, treeDiM.StackBuilder.Basics, Version=2.0.25.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>treeDiM.StackBuilder.Basics.UCtrlOptDouble, treeDiM.StackBuilder.Basics, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;uCtrlOptMaximumWeight.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -244,17 +244,17 @@
   </data>
   <data name="uCtrlOptMaximumHeight.Value" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFN0cmVlRGlNLlN0YWNrQnVpbGRlci5CYXNpY3MsIFZlcnNpb249
-        Mi4wLjI1LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJXRyZWVEaU0u
-        U3RhY2tCdWlsZGVyLkJhc2ljcy5PcHREb3VibGUCAAAACl9hY3RpdmF0ZWQEX3ZhbAAAAQYCAAAAAAAA
-        AAAAAAAACw==
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFJ0cmVlRGlNLlN0YWNrQnVpbGRlci5CYXNpY3MsIFZlcnNpb249
+        My4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsBQEAAAAldHJlZURpTS5T
+        dGFja0J1aWxkZXIuQmFzaWNzLk9wdERvdWJsZQIAAAAKX2FjdGl2YXRlZARfdmFsAAABBgIAAAAAAAAA
+        AAAAAAAL
 </value>
   </data>
   <data name="&gt;&gt;uCtrlOptMaximumHeight.Name" xml:space="preserve">
     <value>uCtrlOptMaximumHeight</value>
   </data>
   <data name="&gt;&gt;uCtrlOptMaximumHeight.Type" xml:space="preserve">
-    <value>treeDiM.StackBuilder.Basics.UCtrlOptDouble, treeDiM.StackBuilder.Basics, Version=2.0.25.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>treeDiM.StackBuilder.Basics.UCtrlOptDouble, treeDiM.StackBuilder.Basics, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;uCtrlOptMaximumHeight.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -284,7 +284,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>5</value>
   </data>
   <data name="uCtrlOverhang.Location" type="System.Drawing.Point, System.Drawing">
     <value>307, 91</value>
@@ -302,13 +302,13 @@
     <value>uCtrlOverhang</value>
   </data>
   <data name="&gt;&gt;uCtrlOverhang.Type" xml:space="preserve">
-    <value>treeDiM.StackBuilder.Basics.UCtrlDualDouble, treeDiM.StackBuilder.Basics, Version=2.0.25.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>treeDiM.StackBuilder.Basics.UCtrlDualDouble, treeDiM.StackBuilder.Basics, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;uCtrlOverhang.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;uCtrlOverhang.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>6</value>
   </data>
   <data name="lbPallet.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -338,7 +338,109 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbPallet.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>9</value>
+  </data>
+  <data name="uCtrlLayerList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="uCtrlLayerList.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="uCtrlLayerList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 232</value>
+  </data>
+  <data name="uCtrlLayerList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>784, 274</value>
+  </data>
+  <data name="uCtrlLayerList.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;uCtrlLayerList.Name" xml:space="preserve">
+    <value>uCtrlLayerList</value>
+  </data>
+  <data name="&gt;&gt;uCtrlLayerList.Type" xml:space="preserve">
+    <value>treeDiM.StackBuilder.Graphics.UCtrlLayerList, treeDiM.StackBuilder.Graphics, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;uCtrlLayerList.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;uCtrlLayerList.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="checkBoxBestLayersOnly.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxBestLayersOnly.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 209</value>
+  </data>
+  <data name="checkBoxBestLayersOnly.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 17</value>
+  </data>
+  <data name="checkBoxBestLayersOnly.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="checkBoxBestLayersOnly.Text" xml:space="preserve">
+    <value>Show best layers only</value>
+  </data>
+  <data name="&gt;&gt;checkBoxBestLayersOnly.Name" xml:space="preserve">
+    <value>checkBoxBestLayersOnly</value>
+  </data>
+  <data name="&gt;&gt;checkBoxBestLayersOnly.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxBestLayersOnly.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;checkBoxBestLayersOnly.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="bnNext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>697, 512</value>
+  </data>
+  <data name="bnNext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="bnNext.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="bnNext.Text" xml:space="preserve">
+    <value>Next &gt;</value>
+  </data>
+  <data name="&gt;&gt;bnNext.Name" xml:space="preserve">
+    <value>bnNext</value>
+  </data>
+  <data name="&gt;&gt;bnNext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bnNext.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;bnNext.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="bnBestCombination.Location" type="System.Drawing.Point, System.Drawing">
+    <value>560, 512</value>
+  </data>
+  <data name="bnBestCombination.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 23</value>
+  </data>
+  <data name="bnBestCombination.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="bnBestCombination.Text" xml:space="preserve">
+    <value>Show best combinations</value>
+  </data>
+  <data name="&gt;&gt;bnBestCombination.Name" xml:space="preserve">
+    <value>bnBestCombination</value>
+  </data>
+  <data name="&gt;&gt;bnBestCombination.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bnBestCombination.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;bnBestCombination.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="uCtrlCaseOrientation.Location" type="System.Drawing.Point, System.Drawing">
     <value>17, 92</value>
@@ -353,13 +455,13 @@
     <value>uCtrlCaseOrientation</value>
   </data>
   <data name="&gt;&gt;uCtrlCaseOrientation.Type" xml:space="preserve">
-    <value>treeDiM.StackBuilder.Graphics.uCtrlCaseOrientation, treeDiM.StackBuilder.Graphics, Version=2.0.25.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>treeDiM.StackBuilder.Graphics.uCtrlCaseOrientation, treeDiM.StackBuilder.Graphics, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;uCtrlCaseOrientation.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;uCtrlCaseOrientation.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>4</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -369,9 +471,6 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>784, 561</value>
-  </data>
-  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>800, 600</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>800, 600</value>
@@ -383,6 +482,6 @@
     <value>FormNewAnalysisCasePallet</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>treeDiM.StackBuilder.Desktop.FormNewBase, treeDiM.StackBuilder.Desktop, Version=2.0.25.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>treeDiM.StackBuilder.Desktop.FormNewBase, treeDiM.StackBuilder.Desktop, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

@@ -104,6 +104,7 @@ namespace treeDiM.StackBuilder.Engine.Test
                         // instantiate solution viewer
                         CasePalletSolutionViewer sv = new CasePalletSolutionViewer(sol);
                         sv.Draw(graphics);
+                        graphics.Flush();
                         // save
                         string fileName = string.Format("Pallet_{0}.bmp", solIndex++);
                         string filePath = Path.Combine(Path.GetTempPath(), fileName);

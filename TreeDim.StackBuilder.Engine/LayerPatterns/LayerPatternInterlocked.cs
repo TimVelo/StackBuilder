@@ -17,7 +17,7 @@ namespace treeDiM.StackBuilder.Engine
             get { return "Interlocked"; }
         }
 
-        public override bool GetLayerDimensions(Layer layer, out double actualLength, out double actualWidth)
+        public override bool GetLayerDimensions(Layer2D layer, out double actualLength, out double actualWidth)
         {
             double boxLength = layer.BoxLength;
             double boxWidth = layer.BoxWidth;
@@ -34,7 +34,7 @@ namespace treeDiM.StackBuilder.Engine
             return maxSizeXLength > 0 && maxSizeYLength > 0 && maxSizeXWidth > 0 && maxSizeYWidth > 0;
         }
 
-        public override void GenerateLayer(Layer layer, double actualLength, double actualWidth)
+        public override void GenerateLayer(Layer2D layer, double actualLength, double actualWidth)
         {
             layer.Clear();
 
@@ -111,7 +111,7 @@ namespace treeDiM.StackBuilder.Engine
                 --sizeXLength;
             }
         }
-        public override int GetNumberOfVariants(Layer layer) { return 1; }
+        public override int GetNumberOfVariants(Layer2D layer) { return 1; }
         public override bool CanBeSwapped { get { return true; } }
         public override bool CanBeInverted { get { return true; } }
         #endregion

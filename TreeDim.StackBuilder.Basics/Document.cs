@@ -28,6 +28,8 @@ namespace treeDiM.StackBuilder.Basics
         // new
         void OnNewDocument(Document doc);
         void OnNewTypeCreated(Document doc, ItemBase itemBase);
+        void OnNewAnalysisCreated(Document doc, Analysis analysis);
+
         void OnNewCasePalletAnalysisCreated(Document doc, CasePalletAnalysis analysis);
         void OnNewPackPalletAnalysisCreated(Document doc, PackPalletAnalysis analysis);
         void OnNewCylinderPalletAnalysisCreated(Document doc, CylinderPalletAnalysis analysis);
@@ -58,12 +60,15 @@ namespace treeDiM.StackBuilder.Basics
         private DateTime _dateCreated;
         private UnitsManager.UnitSystem _unitSystem;
         private List<ItemBase> _typeList = new List<ItemBase>();
+        private List<Analysis> _analyses = new List<Analysis>();
+
         private List<CasePalletAnalysis> _casePalletAnalyses = new List<CasePalletAnalysis>();
         private List<PackPalletAnalysis> _packPalletAnalyses = new List<PackPalletAnalysis>();
         private List<CylinderPalletAnalysis> _cylinderPalletAnalyses = new List<CylinderPalletAnalysis>();
         private List<HCylinderPalletAnalysis> _hCylinderPalletAnalyses = new List<HCylinderPalletAnalysis>();
         private List<BoxCaseAnalysis> _boxCaseAnalyses = new List<BoxCaseAnalysis>();
         private List<BoxCasePalletAnalysis> _boxCasePalletOptimizations = new List<BoxCasePalletAnalysis>();
+ 
         private List<IDocumentListener> _listeners = new List<IDocumentListener>();
         protected static readonly ILog _log = LogManager.GetLogger(typeof(Document));
         #endregion
@@ -633,6 +638,31 @@ namespace treeDiM.StackBuilder.Basics
             Modify();
             return analysis;
         }
+
+        public AnalysisCasePallet CreateNewAnalysisCasePallet(
+            string name, string description
+            , BProperties box, PalletProperties pallet
+            , List<InterlayerProperties> interlayers
+            , PalletCornerProperties palletCorners, PalletCapProperties palletCap, PalletFilmProperties palletFilm
+            , ConstraintSetCasePallet constraintSet
+            , List<LayerDesc> layerDescs
+            )
+        {
+            AnalysisCasePallet analysis = new AnalysisCasePallet(box, pallet, constraintSet);
+            foreach (InterlayerProperties interlayer in interlayers)
+                analysis.AddInterlayer(interlayer);
+            analysis.PalletCornerProperties     = palletCorners;
+            analysis.PalletCapProperties        = palletCap;
+            analysis.PalletFilmProperties       = palletFilm;
+            analysis.AddSolution(layerDescs);
+
+            // notify listeners
+            NotifyOnNewAnalysisCreated(analysis);
+            Modify();
+
+            return analysis;
+        }
+
 
         public PackPalletAnalysis CreateNewPackPalletAnalysis(
             string name, string description
@@ -2606,7 +2636,7 @@ namespace treeDiM.StackBuilder.Basics
                 patternName = eltLayer.Attributes["PatternName"].Value;
             if (string.Equals(eltLayer.Name, "BoxLayer", StringComparison.CurrentCultureIgnoreCase))
             {
-                BoxLayer boxLayer = new BoxLayer(UnitsManager.ConvertLengthFrom(zLow, _unitSystem), patternName);
+                BoxLayer boxLayer = new BoxLayer(UnitsManager.ConvertLengthFrom(zLow, _unitSystem), 0);
                 boxLayer.MaximumSpace = maxSpace;
                 foreach (XmlNode nodeBoxPosition in eltLayer.ChildNodes)
                 {
@@ -4814,6 +4844,11 @@ namespace treeDiM.StackBuilder.Basics
         {
             foreach (IDocumentListener listener in _listeners)
                 listener.OnNewTypeCreated(this, item);
+        }
+        private void NotifyOnNewAnalysisCreated(Analysis analysis)
+        {
+            foreach (IDocumentListener listener in _listeners)
+                listener.OnNewAnalysisCreated(this, analysis);
         }
         private void NotifyOnNewCasePalletAnalysisCreated(CasePalletAnalysis analysis)
         {

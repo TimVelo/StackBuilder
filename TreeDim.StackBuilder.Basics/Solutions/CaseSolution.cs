@@ -123,9 +123,9 @@ namespace treeDiM.StackBuilder.Basics
         #endregion
 
         #region Adding layer / interlayer
-        public BoxLayer CreateNewLayer(double zLow, string patternName)
+        public BoxLayer CreateNewLayer(double zLow, int layerIndex)
         {
-            BoxLayer layer = new BoxLayer(zLow, patternName);
+            BoxLayer layer = new BoxLayer(zLow, layerIndex);
             Add(layer);
             return layer;
         }
@@ -144,24 +144,7 @@ namespace treeDiM.StackBuilder.Basics
             if (this.BoxPerPalletCount > sol.BoxPerPalletCount)
                 return -1;
             else if (this.BoxPerPalletCount == sol.BoxPerPalletCount)
-            {
-                if ((sol.Count > 0 && sol[0] is BoxLayer)
-                    && (this.Count > 0 && this[0] is BoxLayer))
-                {
-                    BoxLayer layerSol = (BoxLayer)sol[0];
-                    int iPatternSol = PatternNameToIndex(layerSol.PatternName);
-                    BoxLayer layerThis = (BoxLayer)this[0];
-                    int iPatternThis = PatternNameToIndex(layerThis.PatternName);
-
-                    if (iPatternSol > iPatternThis)
-                        return -1;
-                    else if (iPatternSol == iPatternThis)
-                        return 0;
-                    else
-                        return 1;                    
-                }
                 return 0;
-            }
             else
                 return 1; 
         }

@@ -18,7 +18,6 @@ namespace treeDiM.StackBuilder.Engine
     public class CasePalletSolver : ICasePalletAnalysisSolver
     {
         #region Data members
-        private static List<LayerPattern> _patterns = new List<LayerPattern>();
         private BProperties _bProperties;
         private PalletProperties _palletProperties;
         private InterlayerProperties _interlayerProperties, _interlayerPropertiesAntiSlip;
@@ -31,7 +30,6 @@ namespace treeDiM.StackBuilder.Engine
         #region Constructor
         public CasePalletSolver()
         {
-            CasePalletSolver.LoadPatterns();
         }
         #endregion
 
@@ -75,20 +73,20 @@ namespace treeDiM.StackBuilder.Engine
         #endregion
 
         #region Private methods
-        private Layer GenerateBestLayer(
+        private Layer2D GenerateBestLayer(
             BProperties bProperties, PalletProperties palletProperties, PalletCornerProperties cornerProperties,
             PalletConstraintSet constraintSet, HalfAxis.HAxis hAxis)
         {
-            Layer bestLayer = null;
+            Layer2D bestLayer = null;
             // loop through all patterns
-            foreach (LayerPattern pattern in _patterns)
+            foreach (LayerPattern pattern in LayerPattern.All)
             {
                 // is pattern allowed
                 if (!_constraintSet.AllowPattern(pattern.Name)) continue;
 
                 // direction 1
-                Layer layer1 = new Layer(bProperties, palletProperties, cornerProperties,
-                    constraintSet, hAxis);
+                Layer2D layer1 = BuildLayer(bProperties, palletProperties, cornerProperties,
+                    constraintSet, hAxis, false, false);
                 double actualLength = 0.0, actualWidth = 0.0;
                 pattern.GetLayerDimensionsChecked(layer1, out actualLength, out actualWidth);
                 pattern.GenerateLayer(layer1, actualLength, actualWidth);
@@ -96,8 +94,8 @@ namespace treeDiM.StackBuilder.Engine
                 if (null == bestLayer || bestLayer.Count < layer1.Count)
                     bestLayer = layer1;
                 // direction 2 (opposite)
-                Layer layer2 = new Layer(bProperties, palletProperties, cornerProperties,
-                    constraintSet, HalfAxis.Opposite(hAxis));
+                Layer2D layer2 = BuildLayer(bProperties, palletProperties, cornerProperties,
+                    constraintSet, HalfAxis.Opposite(hAxis), false, false);
                 actualLength = 0.0; actualWidth = 0.0;
                 pattern.GetLayerDimensionsChecked(layer2, out actualLength, out actualWidth);
                 pattern.GenerateLayer(layer2, actualLength, actualWidth);
@@ -111,7 +109,7 @@ namespace treeDiM.StackBuilder.Engine
         private List<CasePalletSolution> GenerateSolutions()
         {
             // generate best layers
-            Layer[] bestLayers = new Layer[3];
+            Layer2D[] bestLayers = new Layer2D[3];
             if (_constraintSet.AllowLastLayerOrientationChange)
             {
                 bestLayers[0] = GenerateBestLayer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, HalfAxis.HAxis.AXIS_X_P);
@@ -121,15 +119,13 @@ namespace treeDiM.StackBuilder.Engine
 
             List<CasePalletSolution> solutions = new List<CasePalletSolution>();
             // loop through all patterns
-            foreach (LayerPattern pattern in _patterns)
+            foreach (LayerPattern pattern in LayerPattern.All)
             {
                 if (!_constraintSet.AllowPattern(pattern.Name))
                     continue;
                 // loop through all swap positions (if layer can be swapped)
                 for (int swapPos = 0; swapPos < (pattern.CanBeSwapped ? 2 : 1); ++swapPos)
                 {
-                    pattern.Swapped = swapPos == 1;
-
                     // loop through all vertical axes
                     for (int i = 0; i < 3; ++i)
                     {
@@ -141,10 +137,10 @@ namespace treeDiM.StackBuilder.Engine
                         try
                         {
                             // build 2 layers (pallet length/width)
-                            Layer layer1 = new Layer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, axisOrtho1);
-                            Layer layer1_inv = new Layer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, axisOrtho1, true);
-                            Layer layer2 = new Layer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, axisOrtho2);
-                            Layer layer2_inv = new Layer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, axisOrtho2, true);
+                            Layer2D layer1 = BuildLayer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, axisOrtho1, swapPos == 1, false);
+                            Layer2D layer1_inv = BuildLayer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, axisOrtho1, swapPos == 1, true);
+                            Layer2D layer2 = BuildLayer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, axisOrtho2, swapPos == 1, false);
+                            Layer2D layer2_inv = BuildLayer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, axisOrtho2, swapPos == 1, true);
                             double actualLength1 = 0.0, actualLength2 = 0.0, actualWidth1 = 0.0, actualWidth2 = 0.0;
                             bool bResult1 = pattern.GetLayerDimensionsChecked(layer1, out actualLength1, out actualWidth1);
                             bool bResult2 = pattern.GetLayerDimensionsChecked(layer2, out actualLength2, out actualWidth2);
@@ -152,7 +148,7 @@ namespace treeDiM.StackBuilder.Engine
                             string layerAlignment = string.Empty;
                             for (int j = 0; j < 6; ++j)
                             {
-                                Layer layer1T = null, layer2T = null;
+                                Layer2D layer1T = null, layer2T = null;
                                 if (0 == j && _constraintSet.AllowAlignedLayers && bResult1)
                                 {
                                     pattern.GenerateLayer(layer1, actualLength1, actualWidth1);
@@ -241,8 +237,8 @@ namespace treeDiM.StackBuilder.Engine
 
                                     // select current layer type
                                     double cornerThickness = null != _cornerProperties ? _cornerProperties.Thickness : 0.0;
-                                    Layer currentLayer = iLayerIndex % 2 == 0 ? layer1T : layer2T;
-                                    BoxLayer layer = sol.CreateNewLayer(zLayer, pattern.Name);
+                                    Layer2D currentLayer = iLayerIndex % 2 == 0 ? layer1T : layer2T;
+                                    BoxLayer layer = sol.CreateNewLayer(zLayer, 0);
                                     layer.MaximumSpace = currentLayer.MaximumSpace;
 
                                     foreach (LayerPosition layerPos in currentLayer)
@@ -284,13 +280,13 @@ namespace treeDiM.StackBuilder.Engine
                                     // remaining height
                                     double remainingHeight = _constraintSet.MaximumHeight - zLayer;
                                     // test to complete with best layer
-                                    Layer bestLayer = null; int ibestLayerCount = 0;
+                                    Layer2D bestLayer = null; int ibestLayerCount = 0;
                                     for (int iLayerDir = 0; iLayerDir < 3; ++iLayerDir)
                                     {
                                         // another direction than the current direction
                                         if (iLayerDir == i) continue;
 
-                                        Layer layer = bestLayers[iLayerDir];
+                                        Layer2D layer = bestLayers[iLayerDir];
                                         if (null == layer) continue;
 
                                         int layerCount = Convert.ToInt32(Math.Floor(remainingHeight / layer.BoxHeight));
@@ -309,7 +305,7 @@ namespace treeDiM.StackBuilder.Engine
 
                                         for (int iAddLayer = 0; iAddLayer < ibestLayerCount; ++iAddLayer)
                                         {
-                                            BoxLayer layer = sol.CreateNewLayer(zLayer, string.Empty);
+                                            BoxLayer layer = sol.CreateNewLayer(zLayer, 0);
 
                                             foreach (LayerPosition layerPos in bestLayer)
                                             {
@@ -388,7 +384,7 @@ namespace treeDiM.StackBuilder.Engine
             List<CasePalletSolution> solutions = new List<CasePalletSolution>();
 
             // generate best layers
-            Layer[] bestLayers = new Layer[3];
+            Layer2D[] bestLayers = new Layer2D[3];
             bestLayers[0] = GenerateBestLayer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, HalfAxis.HAxis.AXIS_X_P);
             bestLayers[1] = GenerateBestLayer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, HalfAxis.HAxis.AXIS_Y_P);
             bestLayers[2] = GenerateBestLayer(_bProperties, _palletProperties, _cornerProperties, _constraintSet, HalfAxis.HAxis.AXIS_Z_P);
@@ -406,8 +402,8 @@ namespace treeDiM.StackBuilder.Engine
                     , _bProperties.Dimension(axis1), bestLayers[(i + 1) % 3].Count
                     , out noLayer0, out noLayer1))
                 {
-                    Layer layer0 = bestLayers[i % 3];
-                    Layer layer1 = bestLayers[(i + 1) % 3];
+                    Layer2D layer0 = bestLayers[i % 3];
+                    Layer2D layer1 = bestLayers[(i + 1) % 3];
 
                     // sol0
                     CasePalletSolution sol0 = new CasePalletSolution(null, string.Format("combination_{0}{1}", dir[i % 3], dir[(i % 3) + 1]), false);
@@ -416,7 +412,7 @@ namespace treeDiM.StackBuilder.Engine
 
                     for (int j = 0; j < noLayer0; ++j)
                     {
-                        BoxLayer layer = sol0.CreateNewLayer(zLayer, string.Empty);
+                        BoxLayer layer = sol0.CreateNewLayer(zLayer, 0);
                         foreach (LayerPosition layerPos in layer0)
                         {
                             LayerPosition layerPosTemp = AdjustLayerPosition(layerPos);
@@ -434,7 +430,7 @@ namespace treeDiM.StackBuilder.Engine
                     }
                     for (int j = 0; j < noLayer1; ++j)
                     {
-                        BoxLayer layer = sol0.CreateNewLayer(zLayer, string.Empty);
+                        BoxLayer layer = sol0.CreateNewLayer(zLayer, 0);
                         foreach (LayerPosition layerPos in layer1)
                         {
                             LayerPosition layerPosTemp = AdjustLayerPosition(layerPos);
@@ -458,7 +454,7 @@ namespace treeDiM.StackBuilder.Engine
 
                     for (int j = 0; j < noLayer0; ++j)
                     {
-                        BoxLayer layer = sol1.CreateNewLayer(zLayer, string.Empty);
+                        BoxLayer layer = sol1.CreateNewLayer(zLayer, 0);
                         foreach (LayerPosition layerPos in layer1)
                         {
                             LayerPosition layerPosTemp = AdjustLayerPosition(layerPos);
@@ -476,7 +472,7 @@ namespace treeDiM.StackBuilder.Engine
                     }
                     for (int j = 0; j < noLayer1; ++j)
                     {
-                        BoxLayer layer = sol1.CreateNewLayer(zLayer, string.Empty);
+                        BoxLayer layer = sol1.CreateNewLayer(zLayer, 0);
                         foreach (LayerPosition layerPos in layer0)
                         {
                             LayerPosition layerPosTemp = AdjustLayerPosition(layerPos);
@@ -552,45 +548,40 @@ namespace treeDiM.StackBuilder.Engine
             }
             return layerPosTemp;
         }
+
+        protected Layer2D BuildLayer(
+            BProperties boxProperties, PalletProperties palletProperties, PalletCornerProperties cornerProperties
+            , PalletConstraintSet constraintSet, HalfAxis.HAxis axisOrtho, bool swapped, bool inversed)
+        {
+            double cornerThickness = null != cornerProperties ? cornerProperties.Thickness : 0.0;
+            return new Layer2D(
+                new Vector3D()
+                , new Vector2D(palletProperties.Length + constraintSet.OverhangX - 2.0 * cornerThickness, palletProperties.Width + constraintSet.OverhangY - 2.0 * cornerThickness)
+                , axisOrtho
+                , swapped);
+        }
         #endregion
 
         #region Static methods
-        private static void LoadPatterns()
-        {
-            if (0 == _patterns.Count)
-            {
-                _patterns.Add(new LayerPatternColumn());
-                _patterns.Add(new LayerPatternInterlocked());
-                _patterns.Add(new LayerPatternInterlockedSymetric());
-                _patterns.Add(new LayerPatternInterlockedFilled());
-                _patterns.Add(new LayerPatternDiagonale());
-                _patterns.Add(new LayerPatternTrilock());
-                _patterns.Add(new LayerPatternSpirale());
-                _patterns.Add(new LayerPatternEnlargedSpirale());
-            }
-        }
-
         public static string[] PatternNames
         {
             get
             {
-                CasePalletSolver.LoadPatterns();
-                string[] patternNames = new string[_patterns.Count];
+                List<string> patternNames = new List<string>();
                 int i = 0;
-                foreach (LayerPattern p in _patterns)
+                foreach (LayerPattern p in LayerPattern.All)
                     patternNames[i++] = p.Name;
-                return patternNames;
+                return patternNames.ToArray();
             }
         }
         public static List<string> PatternNameList
         {
             get
             {
-                CasePalletSolver.LoadPatterns();
-                List<string> patternNameList = new List<string>();
-                foreach (LayerPattern p in _patterns)
-                    patternNameList.Add(p.Name);
-                return patternNameList;
+                List<string> patternNames = new List<string>();
+                foreach (LayerPattern p in LayerPattern.All)
+                    patternNames.Add(p.Name);
+                return patternNames;
             }
         }
         #endregion

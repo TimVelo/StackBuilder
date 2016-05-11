@@ -27,6 +27,7 @@ namespace treeDiM.StackBuilder.Graphics
         #region Data members
         public double _angleHoriz = 45.0, _angleVert = 45.0;
         private IDrawingContainer _drawingContainer;
+        private Viewer _viewer;
         private bool _isDrag = false;
         private Point _prevLocation;
         private bool _showToolBar = false;
@@ -37,10 +38,12 @@ namespace treeDiM.StackBuilder.Graphics
 
         #region Delegates
         public delegate void ButtonPressedHandler(int iIndex);
+        public delegate void VolumeSelectedHandler(int id);
         #endregion
 
         #region Events
         public event ButtonPressedHandler ButtonPressed;
+        public event VolumeSelectedHandler VolumeSelected;
         #endregion
 
         #region Constructor
@@ -95,6 +98,15 @@ namespace treeDiM.StackBuilder.Graphics
         {
             set { _drawingContainer = value; }            
         }
+        public Viewer Viewer
+        {
+            get { return _viewer; }
+            set { _viewer = value; }
+        }
+        protected bool ShowDimensions
+        {
+            get { return true; }
+        }
         #endregion
 
         #region Overrides
@@ -116,6 +128,7 @@ namespace treeDiM.StackBuilder.Graphics
             graphics.SetViewport(-500.0f, -500.0f, 500.0f, 500.0f);
             // show images
             graphics.ShowTextures = true;
+
             if (null != _drawingContainer)
             {
                 try
@@ -132,7 +145,30 @@ namespace treeDiM.StackBuilder.Graphics
                     _log.Error(ex.Message); 
                 }
             }
+            if (null != _viewer)
+            {
+                try
+                {
+                    _viewer.Draw(graphics, ShowDimensions);
+                }
+                catch (Exception ex)
+                {
+                    e.Graphics.DrawString(ex.Message
+                        , new Font("Arial", 12)
+                        , new SolidBrush(Color.Red)
+                        , new Point(0, 0)
+                        , StringFormat.GenericDefault);
+                    _log.Error(ex.Message); 
+                }
+            }
+
             graphics.Flush();
+
+            if (null != _viewer)
+            {
+                _viewer.CurrentTransformation = graphics.GetCurrentTransformation();
+                _viewer.ViewDir = graphics.ViewDirection;
+            }
 
             // draw toolbar
             if (ShowToolBar)
@@ -281,10 +317,19 @@ namespace treeDiM.StackBuilder.Graphics
         }
         private void onMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            // build ray
-            // compute intersection with all boxes and collect indexes
-            // sort intersections and keep the nearest
-            // send event
+            // sanity checks
+            uint index = 0;
+            if (null != _viewer && _viewer.TryPicking(e.Location.X, e.Location.Y, out index))
+            {
+                if (null != VolumeSelected)
+                    VolumeSelected((int)index);
+            }
+            else
+            {
+                if (null != VolumeSelected)
+                    VolumeSelected(-1);
+            }
+            Invalidate();
         }
         #endregion
     }

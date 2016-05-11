@@ -29,7 +29,7 @@
   <signTool>"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\signtool.exe"</signTool>
   <timeStampServer>http://timestamp.comodoca.com/authenticode</timeStampServer>
   <signKey>"K:\GitHub\StackBuilder\Signing\treeDiM.pfx"</signKey>
-  <signToolCall>$(signtool) sign  /f $(signKey) /p Knowledge_1 /t $(timeStampServer)</signToolCall>
+  <signToolCall>$(signtool) sign  /f $(signKey) /p 2B3gmehk /t $(timeStampServer)</signToolCall>
   </PropertyGroup>
   <PropertyGroup>
   <!-- this makes wix sign everything it can -->

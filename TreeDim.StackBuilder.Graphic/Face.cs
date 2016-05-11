@@ -279,11 +279,11 @@ namespace treeDiM.StackBuilder.Graphics
                 ptInter = _points[0] + u * vecU + v * vecV;
                 return true;
             }
-            else if (IntersectTriangle(ray, _points[1], _points[2], _points[3], out u, out v))
+            else if (IntersectTriangle(ray, _points[2], _points[3], _points[0], out u, out v))
             {
-                Vector3D vecU = _points[2] - _points[1];
-                Vector3D vecV = _points[3] - _points[1];
-                ptInter = _points[1] + u * vecU + v * vecV;
+                Vector3D vecU = _points[3] - _points[2];
+                Vector3D vecV = _points[0] - _points[2];
+                ptInter = _points[2] + u * vecU + v * vecV;
                 return true;
             }
             else

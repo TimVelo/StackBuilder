@@ -70,7 +70,11 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Analyses\Analysis.cs" />
+    <Compile Include="Analyses\AnalysisCasePallet.cs" />
     <Compile Include="Analyses\PackPalletAnalysis.cs" />
+    <Compile Include="ConstraintSets\ConstraintSetAbstract.cs" />
+    <Compile Include="ConstraintSets\ConstraintSetCasePallet.cs" />
     <Compile Include="ConstraintSets\CylinderPalletConstraintSet.cs" />
     <Compile Include="ConstraintSets\PackPalletConstraintSet.cs" />
     <Compile Include="Containers\PackArrangement.cs" />
@@ -155,6 +159,7 @@
     <Compile Include="Helpers\Texture.cs" />
     <Compile Include="Analyses\TruckAnalysis.cs" />
     <Compile Include="ConstraintSets\TruckConstraintSet.cs" />
+    <Compile Include="Solutions\Solution.cs" />
     <Compile Include="Solutions\TruckSolution.cs" />
     <Compile Include="UnitsManager.cs" />
     <Compile Include="Controls\UCtrlDouble.cs">
@@ -230,7 +235,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\signtool.exe" sign /f "$(SolutionDir)\Signing\treeDiM.pfx" /p Knowledge_1 /t http://timestamp.comodoca.com/authenticode $(TargetPath)</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\signtool.exe" sign /f "$(SolutionDir)\Signing\treeDiM.pfx" /p 2B3gmehk /t http://timestamp.comodoca.com/authenticode $(TargetPath)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

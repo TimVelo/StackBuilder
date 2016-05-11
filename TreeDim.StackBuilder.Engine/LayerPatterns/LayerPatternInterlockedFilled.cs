@@ -14,7 +14,7 @@ namespace treeDiM.StackBuilder.Engine
         #region Implementation of LayerPattern abstract properties and methods
         public override string Name { get { return "Interlocked Filled"; } }
 
-        public override bool GetLayerDimensions(Layer layer, out double actualLength, out double actualWidth)
+        public override bool GetLayerDimensions(Layer2D layer, out double actualLength, out double actualWidth)
         {
             double boxLength = layer.BoxLength;
             double boxWidth = layer.BoxWidth;
@@ -38,7 +38,7 @@ namespace treeDiM.StackBuilder.Engine
                     || ((maxSizeYWidth % 2 == 0) && (fillSizeXWidth * fillSizeYWidth > 0))
                     );
         }
-        public override void GenerateLayer(Layer layer, double actualLength, double actualWidth)
+        public override void GenerateLayer(Layer2D layer, double actualLength, double actualWidth)
         {
             layer.Clear();
 
@@ -56,7 +56,16 @@ namespace treeDiM.StackBuilder.Engine
             double offsetX = 0.5 * (palletLength - actualLength);
             double offsetY = 0.5 * (palletWidth - actualWidth);
 
-            double spaceX = maxSizeXLength + maxSizeXWidth > 1 ? (actualLength - (maxSizeXLength * boxLength + maxSizeXWidth * boxWidth)) / (maxSizeXLength + maxSizeXWidth - 1) : 0.0;
+            double l1 = Math.Max(maxSizeXLength * boxLength, fillSizeXLength * boxWidth);
+            double l2 = Math.Max(maxSizeXWidth * boxWidth, fillSizeXWidth * boxLength);
+            double remainingSpaceX = actualLength - l1 - l2;
+            l1 = l1 + 0.5 * remainingSpaceX;
+            l2 = l2 + 0.5 * remainingSpaceX;
+
+            //double spaceX = maxSizeXLength + maxSizeXWidth > 1 ? (actualLength - (l1 + l2)) / (maxSizeXLength + maxSizeXWidth - 1) : 0.0;
+
+            double spaceXLength = (l1 - maxSizeXLength * boxLength) / ((double)maxSizeXLength - 0.5);
+            double spaceXWidth = (l2 - maxSizeXWidth * boxWidth) / ((double) maxSizeXWidth - 0.5);
             double spaceYLength = maxSizeYLength > 1 ? (actualWidth - maxSizeYLength * boxWidth - fillSizeYLength * boxLength) / (maxSizeYLength + fillSizeYLength - 1) : 0.0;
             double spaceYWidth = maxSizeYWidth > 1 ? (actualWidth - maxSizeYWidth * boxLength - fillSizeYWidth * boxWidth) / (maxSizeYWidth + fillSizeYWidth - 1) : 0.0;
 
@@ -69,7 +78,7 @@ namespace treeDiM.StackBuilder.Engine
                         AddPosition(
                             layer
                             , new Vector2D(
-                                offsetX + i * (boxLength + spaceX)
+                                offsetX + i * (boxLength + spaceXLength)
                                 , offsetY + j * (boxWidth + spaceYLength))
                             , HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
                     }
@@ -83,7 +92,7 @@ namespace treeDiM.StackBuilder.Engine
                         AddPosition(
                             layer
                             , new Vector2D(
-                                offsetX + i * (boxLength + spaceX)
+                                offsetX + i * (boxLength + spaceXLength)
                                 , offsetY + j * (boxWidth + spaceYLength))
                             , HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
                     }
@@ -93,14 +102,12 @@ namespace treeDiM.StackBuilder.Engine
                         AddPosition(
                             layer
                             , new Vector2D(
-                                offsetX + i * (boxLength + spaceX)
+                                offsetX + i * (boxLength + spaceXLength)
                                 , offsetY + j * (boxWidth + spaceYLength) + (fillSizeYLength > 0 ? (spaceYLength + boxLength) : 0.0))
                             , HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
                     }
 
-                double spaceXFill = fillSizeXLength > 1
-                    ? (maxSizeXLength * (boxLength + spaceX) - fillSizeXLength * boxWidth) / (fillSizeXLength-1)
-                    : 0;
+                double spaceXFill = fillSizeXLength > 1 ? (l1 - fillSizeXLength * boxWidth) / ((double)fillSizeXLength - 0.5) : 0;
                 layer.UpdateMaxSpace(spaceXFill);
                 for (int i = 0; i < fillSizeXLength; ++i)
                     for (int j = 0; j < fillSizeYLength; ++j)
@@ -123,7 +130,7 @@ namespace treeDiM.StackBuilder.Engine
                         AddPosition(
                             layer
                             , new Vector2D(
-                                offsetX + maxSizeXLength * (boxLength + spaceX) + i * (boxWidth + spaceX) + boxWidth
+                                offsetX + maxSizeXLength * (boxLength + spaceXLength) + i * (boxWidth + spaceXWidth) + boxWidth
                                 , offsetY + j * (boxLength + spaceYWidth))
                             , HalfAxis.HAxis.AXIS_Y_P, HalfAxis.HAxis.AXIS_X_N);
                     }
@@ -136,7 +143,8 @@ namespace treeDiM.StackBuilder.Engine
                         AddPosition(
                             layer
                             , new Vector2D(
-                                offsetX + maxSizeXLength * (boxLength + spaceX) + i * (boxWidth + spaceX) + boxWidth
+                                /*offsetX + maxSizeXLength * (boxLength + spaceXLength) + i * (boxWidth + spaceXWidth) + boxWidth*/
+                                offsetX + actualLength - (i) * (boxWidth + spaceXWidth) /*- boxWidth*/
                                 , offsetY + j * (boxLength + spaceYWidth))
                             , HalfAxis.HAxis.AXIS_Y_P, HalfAxis.HAxis.AXIS_X_N);
                     }
@@ -147,12 +155,13 @@ namespace treeDiM.StackBuilder.Engine
                         AddPosition(
                             layer
                             , new Vector2D(
-                                offsetX + maxSizeXLength * (boxLength + spaceX) + i * (boxWidth + spaceX) + boxWidth
+                                /*offsetX + maxSizeXLength * (boxLength + spaceX) + i * (boxWidth + spaceX) + boxWidth*/
+                                offsetX + actualLength - (i) * (boxWidth + spaceXWidth) /*- boxWidth*/
                                 , offsetY + j * (boxLength + spaceYWidth) + (fillSizeYWidth > 0 ? (boxWidth + spaceYWidth) : 0.0))
                             , HalfAxis.HAxis.AXIS_Y_P, HalfAxis.HAxis.AXIS_X_N);
                     }
 
-                double spaceXFill = (actualLength - maxSizeXLength * (boxLength + spaceX) - fillSizeXWidth * boxLength) / fillSizeXWidth;
+                double spaceXFill = fillSizeXWidth > 1 ? (l2 - fillSizeXWidth * boxLength) / ((double)fillSizeXWidth - 0.5) : 0.0;
                 layer.UpdateMaxSpace(spaceXFill);
                 for (int i = 0; i < fillSizeXWidth; ++i)
                     for (int j = 0; j < fillSizeYWidth; ++j)
@@ -160,7 +169,8 @@ namespace treeDiM.StackBuilder.Engine
                         AddPosition(
                             layer
                             , new Vector2D(
-                                offsetX + maxSizeXLength * (boxLength + spaceX) + spaceXFill + i * (boxLength + spaceXFill)
+                                offsetX + actualLength - (i+1) * (boxLength + spaceXFill)
+                                /*offsetX + maxSizeXLength * (boxLength + spaceX) + spaceXFill + i * (boxLength + spaceXFill)*/
                                 , offsetY + (maxSizeYWidth / 2) * (boxLength + spaceYWidth) + j * boxWidth)
                             , HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P
                             );
@@ -169,7 +179,6 @@ namespace treeDiM.StackBuilder.Engine
             // maximum space
             layer.UpdateMaxSpace(spaceYLength);
             layer.UpdateMaxSpace(spaceYWidth);
-            layer.UpdateMaxSpace(spaceX);
         }
         private void GetSizeXY(double boxLength, double boxWidth, double palletLength, double palletWidth,
             out int optSizeXLength,  out int optSizeYLength, out int optSizeXWidth, out int optSizeYWidth,
@@ -234,10 +243,11 @@ namespace treeDiM.StackBuilder.Engine
                     optFillSizeXWidth = filledWidth ? fillSizeXWidth : 0;
                     optFillSizeYWidth = filledWidth ? fillSizeYWidth : 0;
                 }
+                // decrement
                 --sizeXLength;
             }
         }
-        public override int GetNumberOfVariants(Layer layer) { return 1; }
+        public override int GetNumberOfVariants(Layer2D layer) { return 1; }
         public override bool CanBeSwapped { get { return true; } }
         public override bool CanBeInverted { get { return true; } }
         #endregion

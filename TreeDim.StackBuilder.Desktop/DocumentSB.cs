@@ -107,6 +107,13 @@ namespace treeDiM.StackBuilder.Desktop
         #endregion
 
         #region View creation methods
+
+        public DockContentAnalysisCasePallet CreateViewAnalysisCasePallet(AnalysisCasePallet analysis)
+        {
+            DockContentAnalysisCasePallet form = new DockContentAnalysisCasePallet(this, analysis);
+            AddView(form);
+            return form;
+        }
         /// <summary>
         /// Creates new DockContentAnalysis view
         /// </summary>
@@ -369,6 +376,11 @@ namespace treeDiM.StackBuilder.Desktop
         {
             if (!CanCreateCasePalletAnalysis) return null;
 
+            FormNewAnalysisCasePallet form = new FormNewAnalysisCasePallet(this, null);
+            if (DialogResult.OK == form.ShowDialog())
+            {
+            }
+            /*
             FormNewAnalysis form = new FormNewAnalysis(this);
             form.Cases = Cases.ToArray();
             form.Pallets = Pallets.ToArray();
@@ -426,6 +438,7 @@ namespace treeDiM.StackBuilder.Desktop
                     constraintSet,
                     new CasePalletSolver());
             }
+            */ 
             return null;
         }
         public PackPalletAnalysis CreateNewPackPalletAnalysisUI()

@@ -272,7 +272,6 @@ namespace treeDiM.StackBuilder.Basics
     }
     #endregion
 
-
     #region Box / case selected solution
     public class SelBoxCaseSolution : ItemBase
     {

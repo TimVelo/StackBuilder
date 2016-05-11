@@ -17,51 +17,34 @@ namespace treeDiM.StackBuilder.Engine
     {
         #region Abstract methods
         abstract public string Name { get; }
-        abstract public bool GetLayerDimensions(Layer layer, out double actualLength, out double actualWidth);
-        abstract public void GenerateLayer(Layer layer, double actualLength, double actualWidth);
-        public void GenerateLayer(Layer2D layer, double actualLength, double actualWidth)
-        { }
-        abstract public int GetNumberOfVariants(Layer layer);
+        abstract public bool GetLayerDimensions(Layer2D layer, out double actualLength, out double actualWidth);
+        abstract public void GenerateLayer(Layer2D layer, double actualLength, double actualWidth);
+        abstract public int GetNumberOfVariants(Layer2D layer);
         abstract public bool CanBeSwapped { get; }
         abstract public bool CanBeInverted { get; }
         #endregion
 
         #region Public properties
-        public int VariantIndex
-        {
-            get { return _variantIndex; }
-            set { _variantIndex = value; }
-        }
-        public bool Swapped
-        {
-            get { return _swapped; }
-            set
-            {
-                _swapped = value;
-                if (!CanBeSwapped && _swapped)
-                    throw new EngineException(string.Format("Pattern {0} can not be swapped.", Name));
-            }
-        }
         #endregion
 
         #region Private methods
-        protected double GetPalletLength(Layer layer)
+        protected double GetPalletLength(Layer2D layer)
         {
-            if (!_swapped)
+            if (!layer.Swapped)
                 return layer.PalletLength;
             else
                 return layer.PalletWidth;
         }
 
-        protected double GetPalletWidth(Layer layer)
+        protected double GetPalletWidth(Layer2D layer)
         { 
-            if (!_swapped)
+            if (!layer.Swapped)
                 return layer.PalletWidth;
             else
                 return layer.PalletLength;        
         }
 
-        public bool GetLayerDimensionsChecked(Layer layer, out double actualLength, out double actualWidth)
+        public bool GetLayerDimensionsChecked(Layer2D layer, out double actualLength, out double actualWidth)
         {
             bool result = GetLayerDimensions(layer, out actualLength, out actualWidth);
             if (actualLength > GetPalletLength(layer))
@@ -73,19 +56,12 @@ namespace treeDiM.StackBuilder.Engine
             return result;
         }
 
-        public bool GetLayerDimensionsChecked(Layer2D layer, out double actualLength, out double actualWidth)
-        {
-            actualLength = 0.0;
-            actualWidth = 0.0;
-            return true;
-        }
-
-        public void AddPosition(Layer layer, Vector2D vPosition, HalfAxis.HAxis lengthAxis, HalfAxis.HAxis widthAxis)
+        public void AddPosition(Layer2D layer, Vector2D vPosition, HalfAxis.HAxis lengthAxis, HalfAxis.HAxis widthAxis)
         {
             Matrix4D matRot = Matrix4D.Identity;
             Vector3D vTranslation = Vector3D.Zero;
 
-            if (_swapped && !layer.Inversed)
+            if (layer.Swapped && !layer.Inversed)
             {
                 matRot = new Matrix4D(
                     0.0, -1.0, 0.0, 0.0
@@ -95,7 +71,7 @@ namespace treeDiM.StackBuilder.Engine
                     );
                 vTranslation = new Vector3D(layer.PalletLength, 0.0, 0.0);
             }
-            else if (!_swapped && layer.Inversed)
+            else if (!layer.Swapped && layer.Inversed)
             {
                 matRot = new Matrix4D(
                     -1.0, 0.0, 0.0, 0.0
@@ -105,7 +81,7 @@ namespace treeDiM.StackBuilder.Engine
                     );
                 vTranslation = new Vector3D(layer.PalletLength, layer.PalletWidth, 0.0);
             }
-            else if (_swapped && layer.Inversed)
+            else if (layer.Swapped && layer.Inversed)
             {
                 matRot = new Matrix4D(
                     0.0, 1.0, 0.0, 0.0
@@ -128,17 +104,55 @@ namespace treeDiM.StackBuilder.Engine
 
             if (!layer.IsValidPosition(new Vector2D(vPositionSwapped.X, vPositionSwapped.Y), lengthAxisSwapped, widthAxisSwapped))
             {
-                _log.Warn(string.Format("Attempt to add an invalid position in pattern = {0}, Variant = {1}, Swapped = true", this.Name, _variantIndex));
+                _log.Warn(string.Format("Attempt to add an invalid position in pattern = {0}, Swapped = {1}", this.Name, layer.Swapped));
                 return;
             }
             layer.AddPosition(new Vector2D(vPositionSwapped.X, vPositionSwapped.Y), lengthAxisSwapped, widthAxisSwapped);
         }
         #endregion
 
+        #region Static methods
+        public static LayerPattern[] All
+        { get { return _allPatterns; } }
+
+        public static LayerPattern GetByName(string patternName)
+        {
+            foreach (LayerPattern pattern in LayerPattern.All)
+            {
+                if (string.Equals(pattern.Name, patternName, StringComparison.CurrentCultureIgnoreCase))
+                    return pattern;
+            }
+            // no pattern found!
+            throw new Exception(string.Format("Invalid pattern name = {0}", patternName));
+        }
+
+        public static int GetPatternNameIndex(string patternName)
+        {
+            int index = 0;
+            foreach (LayerPattern pattern in LayerPattern.All)
+            { 
+                if (string.Equals(pattern.Name, patternName, StringComparison.CurrentCultureIgnoreCase))
+                    return index;
+                ++index;
+            }
+            // no pattern found!
+            throw new Exception(string.Format("Invalid pattern name = {0}", patternName));
+        }
+        #endregion
+
         #region Data members
-        private int _variantIndex = 0;
-        private bool _swapped = false;
         protected static readonly ILog _log = LogManager.GetLogger(typeof(LayerPattern));
+        private static LayerPattern[] _allPatterns = {
+            new LayerPatternColumn()
+            , new LayerPatternInterlocked()
+            , new LayerPatternInterlockedSymetric()
+            , new LayerPatternInterlockedSymetric2()
+            , new LayerPatternInterlockedFilled()
+            , new LayerPatternTrilock()
+            , new LayerPatternDiagonale()
+            , new LayerPatternSpirale()
+            , new LayerPatternEnlargedSpirale()
+        };
         #endregion
     }
 }

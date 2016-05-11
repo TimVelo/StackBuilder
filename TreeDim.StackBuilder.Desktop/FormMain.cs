@@ -1052,6 +1052,10 @@ namespace treeDiM.StackBuilder.Desktop
         // new
         public void OnNewDocument(Document doc) {}
         public void OnNewTypeCreated(Document doc, ItemBase itemBase) { }
+        public void OnNewAnalysisCreated(Document doc, Analysis analysis)
+        {
+            CreateOrActivateViewAnalysis( analysis as AnalysisCasePallet );
+        }
         public void OnNewCasePalletAnalysisCreated(Document doc, CasePalletAnalysis analysis)
         {
             CaseOfBoxesProperties caseOfBoxes = analysis.BProperties as CaseOfBoxesProperties;
@@ -1311,6 +1315,34 @@ namespace treeDiM.StackBuilder.Desktop
         #endregion
 
         #region Form activation/creation
+        public void CreateOrActivateViewAnalysis(Analysis analysis)
+        { 
+            AnalysisCasePallet analysisCasePallet = analysis as AnalysisCasePallet;
+            // ---> search among existing views
+            // ---> activate if found
+            foreach (IDocument doc in Documents)
+                foreach (IView view in doc.Views)
+                {
+                    if (null != analysisCasePallet)
+                    {
+                        DockContentAnalysisCasePallet form = view as DockContentAnalysisCasePallet;
+                        if (null == form ) continue;
+                        if (analysisCasePallet == form.Analysis)
+                        {
+                            form.Activate();
+                            return;
+                        }
+                    }
+                }
+
+            // ---> not found
+            // ---> create new form
+            // get document
+            DocumentSB parentDocument = (DocumentSB)analysis.ParentDocument;
+            DockContentAnalysisCasePallet formAnalysis = parentDocument.CreateViewAnalysisCasePallet(analysisCasePallet);
+            formAnalysis.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+        }
+
         /// <summary>
         /// Creates or activate a pallet analysis view
         /// </summary>

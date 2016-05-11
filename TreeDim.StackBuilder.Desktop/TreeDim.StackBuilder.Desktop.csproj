@@ -135,6 +135,12 @@
       <DependentUpon>CheckedListBoxWithImage.cs</DependentUpon>
     </Compile>
     <Compile Include="ComboBoxItems.cs" />
+    <Compile Include="DockContentAnalysisCasePallet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DockContentAnalysisCasePallet.Designer.cs">
+      <DependentUpon>DockContentAnalysisCasePallet.cs</DependentUpon>
+    </Compile>
     <Compile Include="DockContentCasePalletAnalysis.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -503,6 +509,9 @@
     <EmbeddedResource Include="DockContentAnalysisCaseOfBoxes.nl-NL.resx">
       <DependentUpon>DockContentAnalysisCaseOfBoxes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DockContentAnalysisCasePallet.resx">
+      <DependentUpon>DockContentAnalysisCasePallet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DockContentBoxCaseAnalysis.fr-FR.resx">
       <DependentUpon>DockContentBoxCaseAnalysis.cs</DependentUpon>
     </EmbeddedResource>
@@ -867,6 +876,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisCasePallet.resx">
       <DependentUpon>FormNewAnalysisCasePallet.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisCylinder.de-DE.resx">
       <DependentUpon>FormNewAnalysisCylinder.cs</DependentUpon>
@@ -1656,7 +1666,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\signtool.exe" sign /f "$(SolutionDir)Signing\treeDiM.pfx" /p Knowledge_1 /t http://timestamp.comodoca.com/authenticode $(TargetPath)</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\signtool.exe" sign /f "$(SolutionDir)Signing\treeDiM.pfx" /p 2B3gmehk /t http://timestamp.comodoca.com/authenticode $(TargetPath)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

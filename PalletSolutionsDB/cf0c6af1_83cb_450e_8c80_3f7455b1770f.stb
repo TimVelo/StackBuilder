@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<Document Name="GALIA A9 600x400x300" Description="GALIA A9 600x400x300" Author="PBU" DateCreated="25/11/2013 14:46:20">
+  <ItemProperties>
+    <BoxProperties Id="290c896e-7c5c-4f15-af99-dec26119b17d" Name="A9" Description="GALIA A9 600x400x300" Length="600" Width="400" Height="300" InsideLength="594" InsideWidth="394" InsideHeight="290" Weight="0" ShowTape="False">
+      <FaceColors>
+        <FaceColor FaceIndex="0" Color="-2987746" />
+        <FaceColor FaceIndex="1" Color="-2987746" />
+        <FaceColor FaceIndex="2" Color="-2987746" />
+        <FaceColor FaceIndex="3" Color="-2987746" />
+        <FaceColor FaceIndex="4" Color="-2987746" />
+        <FaceColor FaceIndex="5" Color="-2987746" />
+      </FaceColors>
+      <Textures />
+    </BoxProperties>
+    <PalletProperties Id="d1f4a5d2-c740-4145-872f-1b0b0e02c445" Name="EUR2" Description="EUR2-EPAL (European Pallet Association)" Length="1200" Width="1000" Height="145" Weight="33" AdmissibleLoadWeight="0" AdmissibleLoadHeight="0" Type="EUR2" Color="-256" />
+  </ItemProperties>
+  <Analyses>
+    <AnalysisPallet Name="GALIA A9 600x400x300" Description="GALIA A9 600x400x300" BoxId="290c896e-7c5c-4f15-af99-dec26119b17d" PalletId="d1f4a5d2-c740-4145-872f-1b0b0e02c445">
+      <ConstraintSetBox AlignedLayersAllowed="True" AlternateLayersAllowed="True" AllowedBoxPositions="ZP" AllowedPatterns="Column,Interlocked,Diagonale,Trilock,Spirale,Enlarged spiral" MaximumHeight="1150" MaximumPalletWeight="1000" OverhangX="0" OverhangY="0" />
+      <Solutions>
+        <Solution Title="Interlocked-Z-inv-1-swaped" HomogeneousLayers="false" LimitReached="0" Selected="true">
+          <Layers>
+            <BoxLayer ZLow="145">
+              <BoxPosition Position="(600, 0, 145)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 0, 145)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(800, 1000, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(400, 1000, 145)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(0, 1000, 145)" AxisLength="YN" AxisWidth="XP" />
+            </BoxLayer>
+            <BoxLayer ZLow="445">
+              <BoxPosition Position="(0, 600, 445)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(600, 600, 445)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(400, 0, 445)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(800, 0, 445)" AxisLength="YP" AxisWidth="XN" />
+              <BoxPosition Position="(1200, 0, 445)" AxisLength="YP" AxisWidth="XN" />
+            </BoxLayer>
+            <BoxLayer ZLow="745">
+              <BoxPosition Position="(600, 0, 745)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(0, 0, 745)" AxisLength="XP" AxisWidth="YP" />
+              <BoxPosition Position="(800, 1000, 745)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(400, 1000, 745)" AxisLength="YN" AxisWidth="XP" />
+              <BoxPosition Position="(0, 1000, 745)" AxisLength="YN" AxisWidth="XP" />
+            </BoxLayer>
+          </Layers>
+          <TruckAnalyses />
+          <EctAnalyses />
+        </Solution>
+      </Solutions>
+    </AnalysisPallet>
+  </Analyses>
+</Document>

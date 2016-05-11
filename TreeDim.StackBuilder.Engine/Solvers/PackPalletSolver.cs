@@ -19,7 +19,6 @@ namespace treeDiM.StackBuilder.Engine
     public class PackPalletSolver : IPackPalletAnalysisSolver
     {
         #region Data members
-        private static List<LayerPattern> _patterns = new List<LayerPattern>();
         private PackProperties _packProperties;
         private PalletProperties _palletProperties;
         private InterlayerProperties _interlayerProperties;
@@ -29,7 +28,6 @@ namespace treeDiM.StackBuilder.Engine
         #region Constructor
         public PackPalletSolver()
         {
-            PackPalletSolver.LoadPatterns();
         }
         #endregion
 
@@ -51,13 +49,13 @@ namespace treeDiM.StackBuilder.Engine
 
             HalfAxis.HAxis[] axes = { HalfAxis.HAxis.AXIS_Z_N, HalfAxis.HAxis.AXIS_Z_P };
             // loop throught all patterns
-            foreach (LayerPattern pattern in _patterns)
+            foreach (LayerPattern pattern in LayerPattern.All)
             {
                 // loop throught all axes
                 foreach (HalfAxis.HAxis axis in axes) // axis
                 {
                     // loop through
-                    Layer layer = new Layer(_packProperties, _palletProperties, _constraintSet, axis, false);
+                    Layer2D layer = BuildLayer(_packProperties, _palletProperties, _constraintSet, axis, false, false);
                     double actualLength = 0.0, actualWidth = 0.0;
                     if (!pattern.GetLayerDimensionsChecked(layer, out actualLength, out actualWidth))
                         continue;
@@ -75,7 +73,7 @@ namespace treeDiM.StackBuilder.Engine
 
                     string title = string.Format("{0}-{1}", pattern.Name, axis.ToString());
                     double zLayer = 0.0;
-                    BoxLayer boxLayer = new BoxLayer(zLayer, "");
+                    BoxLayer boxLayer = new BoxLayer(zLayer, 0);
                     foreach (LayerPosition layerPos in layer)
                     {
                         LayerPosition layerPosTemp = AdjustLayerPosition(layerPos);
@@ -182,23 +180,20 @@ namespace treeDiM.StackBuilder.Engine
             }
             return layerPosTemp;
         }
+
+        private Layer2D BuildLayer(PackProperties packProperties, PalletProperties palletProperties, PackPalletConstraintSet constraintSet, HalfAxis.HAxis axisOrtho, bool swapped, bool inversed)
+        {
+            double forcedSpace = constraintSet.MinimumSpace.Value;
+            return new Layer2D(
+                    new Vector3D(packProperties.Length + forcedSpace, packProperties.Width + forcedSpace, packProperties.Height)
+                    , new Vector2D(
+                        palletProperties.Length + constraintSet.OverhangX + forcedSpace
+                        , _palletProperties.Width + constraintSet.OverhangY + forcedSpace)
+                    , axisOrtho, swapped);
+        }
         #endregion
 
         #region Static methods
-        private static void LoadPatterns()
-        {
-            if (0 == _patterns.Count)
-            {
-                _patterns.Add(new LayerPatternColumn());
-                _patterns.Add(new LayerPatternInterlocked());
-                _patterns.Add(new LayerPatternInterlockedSymetric());
-                _patterns.Add(new LayerPatternInterlockedFilled());
-                _patterns.Add(new LayerPatternDiagonale());
-                _patterns.Add(new LayerPatternTrilock());
-                _patterns.Add(new LayerPatternSpirale());
-                _patterns.Add(new LayerPatternEnlargedSpirale());
-            }
-        }
         #endregion
     }
     #endregion

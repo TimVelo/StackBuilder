@@ -14,7 +14,7 @@ namespace treeDiM.StackBuilder.Engine
         #region Implementation of LayerPattern abstract properties and methods
         public override string Name   { get { return "Spirale"; } }
 
-        public override bool GetLayerDimensions(Layer layer, out double actualLength, out double actualWidth)
+        public override bool GetLayerDimensions(Layer2D layer, out double actualLength, out double actualWidth)
         {
             double boxLength = layer.BoxLength;
             double boxWidth = layer.BoxWidth;
@@ -45,7 +45,7 @@ namespace treeDiM.StackBuilder.Engine
             return sizeX_area1 > 0 && sizeX_area2 > 0 && sizeY_area1 > 0 && sizeY_area2 > 0;
         }
 
-        public override void GenerateLayer(Layer layer, double actualLength, double actualWidth)
+        public override void GenerateLayer(Layer2D layer, double actualLength, double actualWidth)
         {
             // initialization
             layer.Clear();
@@ -98,7 +98,7 @@ namespace treeDiM.StackBuilder.Engine
             layer.UpdateMaxSpace( Math.Min(spaceX, spaceY) );
         }
 
-        public override int GetNumberOfVariants(Layer layer) { return 1; }
+        public override int GetNumberOfVariants(Layer2D layer) { return 1; }
         public override bool CanBeSwapped { get { return true; } }
         public override bool CanBeInverted { get { return true; } }
         #endregion

@@ -44,13 +44,18 @@ namespace treeDiM.StackBuilder.Graphics
         #endregion
 
         #region Public properties
-        public BProperties BoxProperties
+        public BProperties BProperties
         {
             set
             {
                 _bProperties = value;
                 Invalidate();
             }
+        }
+        public bool[] AllowedOrientations
+        {
+            get { return new bool[]{ checkBoxX.Checked, checkBoxY.Checked, checkBoxZ.Checked }; }
+            set { checkBoxX.Checked = value[0]; checkBoxY.Checked = value[1]; checkBoxZ.Checked = value[2]; }
         }
         public bool IsOrientationAllowed(HalfAxis.HAxis axis)
         {
@@ -64,6 +69,5 @@ namespace treeDiM.StackBuilder.Graphics
         #region Data members
         private BProperties _bProperties;
         #endregion
-
     }
 }

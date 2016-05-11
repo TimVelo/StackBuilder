@@ -71,7 +71,7 @@ namespace treeDiM.StackBuilder.Basics
                     , 0.0, 0.0, 1.0, 0.0
                     , 0.0, 0.0, 0.0, 1.0);
                 Transform3D swapTransform = new Transform3D(matRot);
-                BoxLayer layer = new BoxLayer(_layer.ZLow, _layer.PatternName);
+                BoxLayer layer = new BoxLayer(_layer.ZLow, 0);
                 foreach (BoxPosition b in _layer)
                 {
                     layer.Add(
@@ -119,7 +119,7 @@ namespace treeDiM.StackBuilder.Basics
             }
 
             // build BoxLayer
-            BoxLayer layer = new BoxLayer(zLow + (hasInterlayer ? interlayerThickness : 0.0), _layer.PatternName);
+            BoxLayer layer = new BoxLayer(zLow + (hasInterlayer ? interlayerThickness : 0.0), 0);
             foreach (BoxPosition b in _layer)
             {
                 layer.Add(

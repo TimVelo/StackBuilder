@@ -17,7 +17,7 @@ namespace treeDiM.StackBuilder.Engine
             get { return "Column"; }
         }
 
-        public override bool GetLayerDimensions(Layer layer, out double actualLength, out double actualWidth)
+        public override bool GetLayerDimensions(Layer2D layer, out double actualLength, out double actualWidth)
         {
             double palletLength = layer.PalletLength;
             double palletWidth = layer.PalletWidth;
@@ -29,7 +29,7 @@ namespace treeDiM.StackBuilder.Engine
             return (palletLength >= boxLength) && (palletWidth >= boxWidth);
         }
 
-        public override void GenerateLayer(Layer layer, double actualLength, double actualWidth)
+        public override void GenerateLayer(Layer2D layer, double actualLength, double actualWidth)
         {
             layer.Clear();
 
@@ -60,7 +60,7 @@ namespace treeDiM.StackBuilder.Engine
             layer.UpdateMaxSpace(spaceY);
         }
 
-        public override int GetNumberOfVariants(Layer layer)
+        public override int GetNumberOfVariants(Layer2D layer)
         {
             return 1;
         }
